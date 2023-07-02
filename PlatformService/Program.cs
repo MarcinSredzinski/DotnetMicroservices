@@ -12,9 +12,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddDbContext<AppDbContext>(options =>
    options.UseInMemoryDatabase("InMem"));
+builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
+PrepDb.PrepPopulation(app);
 // Configure the HTTP request pipeline.
 
 app.UseAuthorization();
