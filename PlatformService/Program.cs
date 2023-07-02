@@ -13,6 +13,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<AppDbContext>(options =>
    options.UseInMemoryDatabase("InMem"));
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
