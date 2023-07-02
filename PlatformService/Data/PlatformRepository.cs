@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PlatformService.Models;
+﻿using PlatformService.Models;
 
 namespace PlatformService.Data;
 
@@ -12,13 +11,18 @@ public class PlatformRepository : IPlatformRepository
     }
     public void Create(Platform platform)
     {
-        _dbContext.Platforms.Add(platform);
-        SaveChanges();
+        if (platform is not null)
+        {
+            _dbContext.Platforms.Add(platform);
+            SaveChanges();
+            return;
+        }
+       throw new ArgumentNullException(nameof(platform));
     }
 
-    public Platform Get(int id)
+    public Platform? Get(int id)
     {
-       return _dbContext.Platforms.FirstOrDefault(p => p.Id == id);
+        return _dbContext.Platforms.FirstOrDefault(p => p.Id == id);
     }
 
     public IEnumerable<Platform> GetAll()
@@ -28,6 +32,6 @@ public class PlatformRepository : IPlatformRepository
 
     public bool SaveChanges()
     {
-       return (_dbContext.SaveChanges() >= 0);
+        return (_dbContext.SaveChanges() >= 0);
     }
 }
