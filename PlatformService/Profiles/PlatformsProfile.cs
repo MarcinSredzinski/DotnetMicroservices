@@ -13,3 +13,6 @@ namespace PlatformService.Profiles
         }
     }
 }
+
+
+https://youtu.be/DgVjEo3OGBI?t=6034
