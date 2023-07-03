@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data;
 using PlatformService.DTOs;
+using PlatformService.Models;
 
 namespace PlatformService.Controllers;
 
@@ -28,11 +29,11 @@ public class PlatformsController : Controller
         return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(_repository.GetAll()));
     }
 
-    [Route("{id}")]
+    [Route("{id}", Name = "GetPlatformById")]
     [HttpGet]
     public ActionResult<PlatformReadDto> GetPlatformById(int id)
     {
-        _logger.LogInformation("--> Getting Platforms");
+        _logger.LogInformation("--> Getting Platform by id");
         var platform = _mapper.Map<PlatformReadDto>(_repository.Get(id));
         if (platform is null)
         {
@@ -41,4 +42,19 @@ public class PlatformsController : Controller
         return Ok(platform);
     }
 
+    [HttpPost]
+    public ActionResult<PlatformReadDto> CreatePlatform([FromBody] PlatformCreateDto platform)
+    {
+        _logger.LogInformation("--> Creating Platform");
+        var platformModel = _mapper.Map<Platform>(platform);
+        _repository.Create(platformModel);
+       
+        var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
+
+        if (platformReadDto is null)
+        {
+            return NotFound();
+        }
+        return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id }, platformReadDto);
+    }
 }
