@@ -2,17 +2,13 @@
 using PlatformService.DTOs;
 using PlatformService.Models;
 
-namespace PlatformService.Profiles
+namespace PlatformService.Profiles;
+
+public class PlatformsProfile : Profile
 {
-    public class PlatformsProfile : Profile
+    public PlatformsProfile()
     {
-        public PlatformsProfile()
-        {
-            CreateMap<Platform, PlatformReadDto>();
-            CreateMap<PlatformCreateDto, Platform>();
-        }
+        CreateMap<Platform, PlatformReadDto>();
+        CreateMap<PlatformCreateDto, Platform>();
     }
 }
-
-
-https://youtu.be/DgVjEo3OGBI?t=6034
