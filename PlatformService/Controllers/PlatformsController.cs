@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PlatformService.Authentication;
 using PlatformService.Data;
 using PlatformService.DTOs;
 using PlatformService.Models;
@@ -22,6 +23,7 @@ public class PlatformsController : Controller
     }
 
     [HttpGet]
+    [ServiceFilter(typeof(ApiKeyAuthFilter))]
     public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
     {
         _logger.LogInformation("--> Getting Platforms");
