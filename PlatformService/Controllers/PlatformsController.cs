@@ -23,7 +23,7 @@ public class PlatformsController : Controller
     }
 
     [HttpGet]
-    [ServiceFilter(typeof(ApiKeyAuthFilter))]
+    //[ServiceFilter(typeof(ApiKeyAuthFilter))]
     public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
     {
         _logger.LogInformation("--> Getting Platforms");
