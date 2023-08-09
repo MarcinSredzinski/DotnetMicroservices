@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PlatformService.Authentication;
 using PlatformService.Data;
 using PlatformService.DTOs;
 using PlatformService.Models;
