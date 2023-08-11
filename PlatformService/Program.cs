@@ -5,11 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "PlatformService", Version = "v1" });
-});
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "PlatformService", Version = "v1" });
+//});
 builder.Services.AddDbContext<AppDbContext>(options =>
    options.UseInMemoryDatabase("InMem"));
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
 PrepDb.PrepPopulation(app);
 // Configure the HTTP request pipeline.
 
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();

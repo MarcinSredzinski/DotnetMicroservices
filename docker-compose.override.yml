@@ -1,8 +1,25 @@
 version: '3.4'
 
 services:
+  commandsservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTPS_PORT=8182
+      #- ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "8181:80"
+      #- "8182:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
   platformservice:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
+      - ASPNETCORE_HTTPS_PORT=8184 
+      #- ASPNETCORE_URLS=https://+:443;http://+:80
+    ports: 
+     - "8183:80"
+     #- "8184:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 

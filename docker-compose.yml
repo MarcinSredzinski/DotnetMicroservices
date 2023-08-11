@@ -1,19 +1,14 @@
 version: '3.4'
 
 services:
+  commandsservice:
+    image: ${DOCKER_REGISTRY-}commandsservice
+    build:
+      context: .
+      dockerfile: CommandsService/Dockerfile
+
   platformservice:
     image: ${DOCKER_REGISTRY-}platformservice
     build:
       context: .
       dockerfile: PlatformService/Dockerfile
-    ports:
-    - "8181:80"
-
-  commandsservice:
-    image: ${DOCKER_REGISTRY-}commandsservice
-    build: 
-      context: .
-      dockerfile: ComandsService/Dockerfile
-    ports: 
-    - "8282:80"
-    - "8283:443"   
