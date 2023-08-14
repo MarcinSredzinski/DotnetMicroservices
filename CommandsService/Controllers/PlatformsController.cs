@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CommandsService.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CommandsService.Controllers;
 
@@ -16,7 +17,7 @@ public class PlatformsController : Controller
     }
 
     [HttpPost]
-    public IActionResult TestInboundConnection()
+    public async Task<IActionResult> CreatePlatform([FromBody] PlatformCreateDto platform)
     {
         using var client = _httpClientFactory.CreateClient("PlatformsHttpClient");
 
