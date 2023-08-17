@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CommandsService.Options;
+namespace PlatformService.Options;
 
 public class PlatformServiceOptions
 {
