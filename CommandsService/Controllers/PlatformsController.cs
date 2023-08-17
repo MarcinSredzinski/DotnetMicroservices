@@ -1,4 +1,5 @@
-﻿using CommandsService.Models;
+﻿using AutoMapper;
+using CommandsService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommandsService.Controllers;
@@ -8,24 +9,30 @@ namespace CommandsService.Controllers;
 public class PlatformsController : Controller
 {
     private readonly ILogger<PlatformsController> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ICommandRepo _repository;
+    private readonly IMapper _mapper;
 
-    public PlatformsController(ILogger<PlatformsController> logger, IHttpClientFactory httpClientFactory)
+    public PlatformsController(ICommandRepo repository, IMapper mapper)
     {
-        _logger = logger;
-        _httpClientFactory = httpClientFactory;
+        _repository = repository;
+        _mapper = mapper;
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
+    {
+        Console.WriteLine("--> Getting Platforms from CommandsService");
+
+        var platformItems = _repository.GetAllPlatforms();
+
+        return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItems));
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePlatform([FromBody] PlatformCreateDto platform)
+    public ActionResult TestInboundConnection()
     {
-        using var client = _httpClientFactory.CreateClient("PlatformsHttpClient");
+        Console.WriteLine("--> Inbound POST # Command Service");
 
-        var response = await client.PostAsJsonAsync($"platforms/CreatePlatform", platform);
-
-        var result = response.Content;
-        var responseBody = await result.ReadFromJsonAsync<PlatformReadDto>();
-
-        return CreatedAtRoute(nameof(GetById), new { responseBody?.Id }, responseBody);
+        return Ok("Inbound test of from Platforms Controler");
     }
 }
