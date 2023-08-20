@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data;
 using PlatformService.DTOs;
 using PlatformService.Models;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService.Controllers;
 
@@ -12,12 +13,14 @@ public class PlatformsController : Controller
 {
     private readonly IPlatformRepository _repository;
     private readonly IMapper _mapper;
+    private readonly ICommandDataClient _commandDataClient;
     private readonly ILogger<PlatformsController> _logger;
 
-    public PlatformsController(IPlatformRepository repo, IMapper mapper, ILogger<PlatformsController> logger)
+    public PlatformsController( ILogger<PlatformsController> logger, IPlatformRepository repo, IMapper mapper, ICommandDataClient commandDataClient)
     {
         _repository = repo;
         _mapper = mapper;
+        _commandDataClient = commandDataClient;
         _logger = logger;
     }
 
