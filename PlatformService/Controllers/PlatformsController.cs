@@ -47,7 +47,7 @@ public class PlatformsController : Controller
     }
 
     [HttpPost]
-    public ActionResult<PlatformReadDto> CreatePlatform([FromBody] PlatformCreateDto platform)
+    public async Task<ActionResult<PlatformReadDto>> CreatePlatform([FromBody] PlatformCreateDto platform)
     {
         _logger.LogInformation("--> Creating Platform");
         var platformModel = _mapper.Map<Platform>(platform);
@@ -55,10 +55,15 @@ public class PlatformsController : Controller
        
         var platformReadDto = _mapper.Map<PlatformReadDto>(platformModel);
 
-        if (platformReadDto is null)
+        try
         {
-            return NotFound();
+            await _commandDataClient.SendPlatformToCommand(platformReadDto);
         }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Could not send synchronously to command service because: {0}", e.Message);           
+        }
+        
         return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id }, platformReadDto);
     }
 }
