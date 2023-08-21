@@ -16,7 +16,10 @@ public class PlatformsController : Controller
     private readonly ICommandDataClient _commandDataClient;
     private readonly ILogger<PlatformsController> _logger;
 
-    public PlatformsController( ILogger<PlatformsController> logger, IPlatformRepository repo, IMapper mapper, ICommandDataClient commandDataClient)
+    public PlatformsController(ILogger<PlatformsController> logger, 
+            IPlatformRepository repo,
+            IMapper mapper,
+            ICommandDataClient commandDataClient)
     {
         _repository = repo;
         _mapper = mapper;
