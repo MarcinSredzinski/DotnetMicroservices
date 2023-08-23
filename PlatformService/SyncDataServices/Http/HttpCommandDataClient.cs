@@ -15,10 +15,12 @@ public class HttpCommandDataClient : ICommandDataClient
         _logger = logger;
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(options.BaseUrl);
+        _logger.LogInformation("Creating {0} with base address {1}", nameof(HttpCommandDataClient), _httpClient.BaseAddress);
     }
 
     public async Task SendPlatformToCommand(PlatformReadDto platform)
     {
+        _logger.LogDebug("Sending platform to command.");
         var httpContent = new StringContent(JsonSerializer.Serialize(platform), Encoding.UTF8, "application/json");
 
         var response = await _httpClient.PostAsync(_httpClient.BaseAddress, httpContent);
