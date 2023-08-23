@@ -60,6 +60,7 @@ public class PlatformsController : Controller
 
         try
         {
+            _logger.LogDebug("Creating platform and sending data to command.");
             await _commandDataClient.SendPlatformToCommand(platformReadDto);
         }
         catch (Exception e)
